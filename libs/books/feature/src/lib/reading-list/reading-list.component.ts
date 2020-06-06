@@ -1,7 +1,8 @@
+// import { finishedReading } from './../../../../data-access/src/lib/+state/reading-list.actions';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getReadingList, removeFromReadingList } from '@tmo/books/data-access';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { getReadingList, removeFromReadingList, finishedReading } from '@tmo/books/data-access';
+import { ReadingListItem } from '@tmo/shared/models';
 
 @Component({
   selector: 'tmo-reading-list',
@@ -10,23 +11,23 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class ReadingListComponent {
   readingList$ = this.store.select(getReadingList);
-  undo = false;
 
-  constructor(private readonly store: Store, private snackBar: MatSnackBar) {}
+  constructor(private readonly store: Store) {}
 
   removeFromReadingList(item) {
-    this.undo = false;
-    const snackBarRef = this.snackBar.open("removed", 'Undo', {
-      duration: 2000
-    });
-    setTimeout( () => {
-      if(!this.undo){
-      this.store.dispatch(removeFromReadingList({ item }));
-      }
-    }, 3000);
+    this.store.dispatch(removeFromReadingList({ item }));
+  }
 
-    snackBarRef.onAction().subscribe(() => {
-      this.undo = true;
-    });
+  markAsFinished(items){
+    console.log(items);
+    // item.finished = true;
+    // item.finishedDate = new Date().toISOString();
+    const item : ReadingListItem = {
+      bookId: items.bookId,
+      finished: true,
+      finishedDate: new Date().toISOString(),
+    }
+    // ...items
+    this.store.dispatch(finishedReading({ item }));
   }
 }
