@@ -11,7 +11,7 @@ const protractor = require('protractor');
 // e.g. reducer update, XHRs, etc.
 const _click = protractor.WebElement.prototype.click;
 protractor.WebElement.prototype.click = function(...args) {
-  return _click.call(this, args).then(() => protractor.browser.sleep(500));
+  return _click.call(this, args).then(() => protractor.browser.sleep(2000));
 };
 
 exports.config = {
