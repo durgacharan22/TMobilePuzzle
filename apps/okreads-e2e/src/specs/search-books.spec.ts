@@ -17,12 +17,28 @@ describe('When: Use the search feature', () => {
     expect(items.length).to.be.greaterThan(1, 'At least one book');
   });
 
-  xit('Then: I should see search results as I am typing', async () => {
+  it('Then: I should see search results as I am typing', async () => {
     await browser.get('/');
     await browser.wait(
       ExpectedConditions.textToBePresentInElement($('tmo-root'), 'okreads')
     );
 
     // TODO: Implement this test!
+    const form = await $('form');
+    const input = await $('input[type="search"]');
+
+    await input.sendKeys("j");
+    await form.submit();
+    const items = await $$('[data-testing="book-item"]');
+    expect(items.length).to.be.greaterThan(1, 'At least one book');
+
+    await input.sendKeys("a");
+    const items1 = await $$('[data-testing="book-item"]');
+    expect(items1.length).to.be.greaterThan(1, 'At least one book');
+
+    await input.sendKeys("va");
+    const items2 = await $$('[data-testing="book-item"]');
+    expect(items2.length).to.be.greaterThan(1, 'At least one book');
+
   });
 });
