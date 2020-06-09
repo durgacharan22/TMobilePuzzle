@@ -24,15 +24,5 @@ describe('When: Use the search feature', () => {
     );
 
     // TODO: Implement this test!
-    const form = await $('form');
-    const input = await $('input[type="search"]');
-    await input.sendKeys('java');
-    await input.sendKeys('python');
-    await input.sendKeys('javascript');
-    await form.submit();
-
-    const items = await $$('[data-testing="book-item"]');
-    expect(items.length).to.be.greaterThan(1, 'At least one book');
-
   });
 });
