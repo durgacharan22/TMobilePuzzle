@@ -17,14 +17,13 @@ import { Book } from '@tmo/shared/models';
 })
 export class BookSearchComponent implements OnInit {
   books: ReadingListBook[];
-
   searchForm = this.fb.group({
     term: ''
   });
 
   constructor(
     private readonly store: Store,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
   ) { }
 
   get searchTerm(): string {

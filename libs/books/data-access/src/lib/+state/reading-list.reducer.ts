@@ -1,3 +1,4 @@
+// import { ReadingListItem } from '@tmo/books/data-access';
 import { Action, createReducer, on } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 
@@ -51,8 +52,12 @@ const readingListReducer = createReducer(
     readingListAdapter.addOne({ bookId: action.book.id, ...action.book }, state)
   ),
   on(ReadingListActions.removeFromReadingList, (state, action) =>
-    readingListAdapter.removeOne(action.item.bookId, state)
-  )
+  readingListAdapter.removeOne(action.item.bookId, state)
+  ),
+  on(ReadingListActions.finishedReading, (state, action) =>
+      // {console.log(action);}
+        readingListAdapter.updateOne( { id : action.item.bookId, changes : { finished : action.item.finished, finishedDate : action.item.finishedDate}}, state)
+    ),
 );
 
 export function reducer(state: State | undefined, action: Action) {
